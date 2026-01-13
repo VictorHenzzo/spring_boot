@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.wykmmam.rest_spring_java.SetupTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.362 s -- in com.wykmmam.rest_spring_java.SetupTests
