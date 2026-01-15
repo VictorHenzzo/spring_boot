@@ -1,12 +1,12 @@
 package com.wykmmam.rest_spring_java.request.converters;
 
-import com.wykmmam.rest_spring_java.exception.UnsupportedMathOperationException;
+import com.wykmmam.rest_spring_java.exception.ResourceNotFoundException;
 
 public class NumberConverter {
     static public Double convertToDouble(String number) throws
-            UnsupportedMathOperationException {
+            ResourceNotFoundException {
         if (isNotNumeric(number)) {
-            throw new UnsupportedMathOperationException(
+            throw new ResourceNotFoundException(
                     "Please provide a numeric value!");
         }
 

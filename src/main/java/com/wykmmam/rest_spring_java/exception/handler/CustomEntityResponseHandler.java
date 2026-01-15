@@ -1,7 +1,7 @@
 package com.wykmmam.rest_spring_java.exception.handler;
 
 import com.wykmmam.rest_spring_java.exception.ExceptionResponse;
-import com.wykmmam.rest_spring_java.exception.UnsupportedMathOperationException;
+import com.wykmmam.rest_spring_java.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,16 +18,28 @@ public class CustomEntityResponseHandler
         extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
+    public final ResponseEntity<ExceptionResponse> handleAllExceptions(
+            Exception ex,
+            WebRequest request
+    ) {
         ExceptionResponse response = new ExceptionResponse(
-                new Date(), ex.getMessage(), request.getDescription(false));
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest request) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(
+            Exception ex,
+            WebRequest request
+    ) {
         ExceptionResponse response = new ExceptionResponse(
-                new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }

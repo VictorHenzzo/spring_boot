@@ -1,61 +1,55 @@
 package com.wykmmam.rest_spring_java.services;
 
+import com.wykmmam.rest_spring_java.exception.ResourceNotFoundException;
 import com.wykmmam.rest_spring_java.model.Person;
+import com.wykmmam.rest_spring_java.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 @Service
 public class PersonService {
-    private final AtomicLong counter = new AtomicLong();
-    private Logger logger = Logger.getLogger(PersonService.class.getName());
+    private final Logger logger =
+            Logger.getLogger(PersonService.class.getName());
 
-    public Person findById(String id) {
+    final PersonRepository repository;
+
+    public PersonService(PersonRepository repository) {
+        this.repository = repository;
+    }
+
+    public Person findById(Long id) {
         logger.info("Finding one person");
-
-        Person person = new Person();
-        person.setId(counter.incrementAndGet());
-        person.setFirstName("Human");
-        person.setLastName("Name");
-        person.setAddress("Baker Street");
-        return person;
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
+                "No records found for this id"));
     }
 
     public List<Person> findAll() {
         logger.info("Finding all people");
-        List<Person> persons = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            Person person = mockPerson(i);
-            persons.add(person);
-        }
-        return persons;
+        return repository.findAll();
     }
 
     public Person create(Person person) {
         logger.info("Creating one person!");
-        return person;
+        return repository.save(person);
     }
 
 
     public Person update(Person person) {
         logger.info("Updating one person!");
-        return person;
+        Person entity = findById(person.getId());
+        entity.setFirstName(person.getFirstName());
+        entity.setLastName(person.getLastName());
+        entity.setAddress(person.getAddress());
+        return repository.save(entity);
     }
 
 
-    public void delete(String id) {
+    public void delete(Long id) {
         logger.info("Deleting one person!");
+        Person entity = findById(id);
+        repository.delete(entity);
     }
 
-    private Person mockPerson(int i) {
-        Person person = new Person();
-        person.setId(counter.incrementAndGet());
-        person.setFirstName("FirstName " + i);
-        person.setLastName("LastName " + i);
-        person.setAddress("Baker Street");
-        return person;
-    }
 }

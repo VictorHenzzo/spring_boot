@@ -1,1 +1,13 @@
-spring.application.name=rest-spring-java
+spring:
+  application:
+    name: rest-spring-java
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false

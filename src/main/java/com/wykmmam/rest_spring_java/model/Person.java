@@ -1,15 +1,33 @@
 package com.wykmmam.rest_spring_java.model;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "person")
 public class Person implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String address;
+
+    @Column(
+            name = "first_name",
+            nullable = false,
+            length = 80
+    ) private String firstName;
+
+    @Column(
+            name = "last_name",
+            nullable = false,
+            length = 80
+    ) private String lastName;
+
+    @Column(
+            nullable = false,
+            length = 150
+    ) private String address;
 
     public Person() {
     }
@@ -57,7 +75,10 @@ public class Person implements Serializable {
         ) && Objects.equals(
                 getLastName(),
                 person.getLastName()
-        ) && Objects.equals(getAddress(), person.getAddress());
+        ) && Objects.equals(
+                getAddress(),
+                person.getAddress()
+        );
     }
 
     @Override
