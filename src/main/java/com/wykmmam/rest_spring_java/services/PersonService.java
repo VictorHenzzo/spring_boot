@@ -3,15 +3,16 @@ package com.wykmmam.rest_spring_java.services;
 import com.wykmmam.rest_spring_java.exception.ResourceNotFoundException;
 import com.wykmmam.rest_spring_java.model.Person;
 import com.wykmmam.rest_spring_java.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class PersonService {
     private final Logger logger =
-            Logger.getLogger(PersonService.class.getName());
+            LoggerFactory.getLogger(PersonService.class.getName());
 
     final PersonRepository repository;
 
