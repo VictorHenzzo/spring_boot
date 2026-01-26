@@ -8,11 +8,11 @@ spring:
     password: postgres
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
     open-in-view: false
 
 logging:
   level:
-    root: WARN
+    root: DEBUG
     com.wykmmam: DEBUG
